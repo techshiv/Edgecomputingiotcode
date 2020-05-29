@@ -17,8 +17,8 @@ DHT dht(DHTPIN, DHTTYPE);
 #define TENSOR_ARENA_SIZE 2*1024
 
 
-Eloquent::TinyML::TfLite<NUMBER_OF_INPUTS, NUMBER_OF_OUTPUTS, TENSOR_ARENA_SIZE> ml2(temperature_predictor_tflite);
-Eloquent::TinyML::TfLite<NUMBER_OF_INPUTS, NUMBER_OF_OUTPUTS, 3 * 1024> ml(humidity_predictor_tflite);
+Eloquent::TinyML::TfLite<NUMBER_OF_INPUTS, NUMBER_OF_OUTPUTS, TENSOR_ARENA_SIZE> temprature(temperature_predictor_tflite);
+Eloquent::TinyML::TfLite<NUMBER_OF_INPUTS, NUMBER_OF_OUTPUTS, 3 * 1024> humidity(humidity_predictor_tflite);
 
 void setup() {
   Serial.begin(115200);
@@ -37,11 +37,11 @@ void loop() {
 
   if (isnan(h) || isnan(t) ) {
     Serial.println(F("Failed to read from DHT sensor!"));
-    float input_array[8] = {2020 , 5, 26, 11,  30, 0,  prevtemp,  prevhum};
-    float input_array2[8] = {2020 , 2, 4, 6,  40, 0,  prevhum,  prevtemp}; //month,day,hour,min,sec,temp,hum
-    //  float input2[1][1]={input_array}
-    float hum = ml.predict( input_array2);
-    float temp = ml2.predict( input_array);
+    float input_array[8] = {2020 , 5, 26, 11,  30, 0,  prevtemp,  prevhum};// use RTC module or GPS module to get realtime date and time
+    float input_array2[8] = {2020 , 2, 4, 6,  40, 0,  prevhum,  prevtemp}; //year,month,day,hour,min,sec,temp,hum
+    
+    float hum = humudity.predict( input_array2);
+    float temp = temprature.predict( input_array);
 
 
     Serial.print("\t predicted humidity: ");
