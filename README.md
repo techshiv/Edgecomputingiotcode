@@ -2,9 +2,7 @@
 
 # Edge Computing
 
-## Machine Learning at End Devices
-
-### TensorFlow and TensorFlow Lite
+## Machine Learning on End Devices
 
 Programming Machine Learning for IOT devices using TensorFlow and TensorFlow Lite
 
